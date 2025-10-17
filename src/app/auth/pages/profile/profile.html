@@ -1,0 +1,49 @@
+<main class="container mx-auto px-4 py-8 sm:py-12">
+  <div class="mb-8 flex flex-wrap items-center justify-between gap-4">
+    <h1 class="text-3xl tracking-tight">Perfil</h1>
+  </div>
+
+  <div class="flex-grow container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    @if (profileData) {
+      <div class="max-w-xl mx-auto">
+        <form class="space-y-6" [formGroup]="userForm">
+          <div class="grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
+            <div class="sm:col-span-6">
+              <label class="block text-sm font-medium text-background-dark" for="username">Usuario</label>
+              <div class="mt-1">
+                <input formControlName="username"
+                       class="block w-full rounded border border-gray-400 px-1 py-2"
+                       id="username" name="username" placeholder="Ingresa tu nombre" type="text"/>
+              </div>
+            </div>
+            <div class="sm:col-span-6">
+              <label class="block text-sm font-medium text-background-dark"
+                     for="nombres">Nombres</label>
+              <div class="mt-1">
+                <input formControlName="nombres"
+                       class="block w-full rounded border border-gray-400 px-1 py-2"
+                       id="nombres" name="nombres" type="text"/>
+              </div>
+            </div>
+            <div class="sm:col-span-6">
+              <label class="block text-sm font-medium text-background-dark"
+                     for="apellidos">Apellidos</label>
+              <div class="mt-1">
+                <input formControlName="apellidos"
+                       class="block w-full rounded border border-gray-400 px-1 py-2"
+                       id="apellidos" name="apellidos" type="text"/>
+              </div>
+            </div>
+          </div>
+          <!--        <div class="">-->
+          <!--          <button (click)="onSubmit()" type="button" [disabled]="checkoutForm.invalid"-->
+          <!--                  class="w-full flex justify-center items-center gap-3 p-3 rounded-lg shadow-sm text-white font-bold bg-primary">-->
+          <!--            <ng-icon name="heroCheckBadgeSolid" class="w-5 h-5"></ng-icon>-->
+          <!--            Realizar pedido-->
+          <!--          </button>-->
+          <!--        </div>-->
+        </form>
+      </div>
+    }
+  </div>
+</main>

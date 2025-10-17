@@ -1,0 +1,18 @@
+<app-toast/>
+<div class="relative flex h-auto min-h-screen w-full flex-col group/design-root overflow-x-hidden">
+  <div class="layout-container min-h-screen flex flex-col">
+    <app-header/>
+    <div class="flex-1 h-full">
+      <router-outlet/>
+    </div>
+    <app-footer/>
+  </div>
+</div>
+
+@if (isLoading()) {
+  <div class="loading-overlay">
+    <div class="bg-white rounded-lg p-12 text-center">
+      <p>Cargando...</p>
+    </div>
+  </div>
+}

@@ -1,0 +1,36 @@
+<div class="fixed top-5 right-5 z-[1000] flex flex-col space-y-4 pointer-events-none">
+  @for (toast of toastService.messages(); track toast.id) {
+    <div [ngClass]="getClasses(toast).bg"
+         class="max-w-xs w-full shadow-lg rounded-lg pointer-events-auto ring-1 ring-gray-200 ring-opacity-5 overflow-hidden transition-all duration-300 ease-out transform translate-x-0 opacity-100"
+         role="alert"
+    >
+      <div class="p-4 flex items-center">
+
+        <div class="flex items-center flex-shrink-0 mr-3">
+          <ng-icon
+            [name]="getClasses(toast).icon"
+            class="w-7 h-7"
+            [ngClass]="getClasses(toast).text"
+          ></ng-icon>
+        </div>
+
+        <div class="text-sm font-medium" [ngClass]="getClasses(toast).text">
+          {{ toast.message }}
+        </div>
+
+        <div class="ml-auto pl-3">
+          <div class="-mx-1.5 -my-1.5">
+            <button
+              (click)="toastService.dismiss(toast.id)"
+              [ngClass]="getClasses(toast).text"
+              class="inline-flex rounded-md p-1.5 hover:bg-opacity-70 focus:outline-none transition-opacity"
+              aria-label="Cerrar notificación"
+            >
+              <ng-icon name="heroXMarkSolid" class="w-5 h-5"></ng-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  }
+</div>

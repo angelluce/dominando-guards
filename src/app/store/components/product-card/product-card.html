@@ -1,0 +1,21 @@
+@let productItem = product();
+
+@if (productItem) {
+  <div class="aspect-square w-full overflow-hidden rounded-lg">
+    <img class="h-full w-full object-cover object-center"
+         [alt]="productItem.name" [src]="productItem.image"/>
+  </div>
+  <h3 class="font-medium first-line mt-3">{{ productItem.name }}</h3>
+  <div class="flex justify-between items-end gap-3">
+    <div>
+      <p class="text-sm text-[#221610]/60 first-line">{{ productItem.description }}</p>
+      <p class="mt-1 text-base font-semibold">{{ productItem.price | currency: 'USD' }}</p>
+    </div>
+    <div>
+      <button (click)="addToCart(productItem)"
+              class="bg-primary rounded-lg px-4 py-3 font-bold text-white flex items-center justify-center">
+        <ng-icon name="heroShoppingCartSolid" class="w-7 h-7"></ng-icon>
+      </button>
+    </div>
+  </div>
+}

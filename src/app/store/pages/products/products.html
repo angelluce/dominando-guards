@@ -1,0 +1,22 @@
+<main class="container mx-auto px-4 py-8 sm:py-12">
+  <div class="mb-8 flex flex-wrap items-center justify-between gap-4">
+    <h1 class="text-3xl tracking-tight">Catálogo</h1>
+    <div class="flex flex-wrap items-center gap-2">
+      <select
+        id="category-select"
+        (change)="handleCategoryChange($event)"
+        [value]="currentCategory()"
+        class="block w-full p-3 text-base border border-gray-300 rounded-lg shadow-sm focus:outline-none"
+      >
+        @for (category of categories; track category) {
+          <option [value]="category">{{ category }}</option>
+        }
+      </select>
+    </div>
+  </div>
+  <div class="grid grid-cols-2 gap-x-3 gap-y-6 sm:grid-cols-3 md:grid-cols-4 lg:gap-x-5 lg:gap-y-10">
+    @for (product of productsFilterable(); track product.id) {
+      <app-product-card [product]="product"/>
+    }
+  </div>
+</main>

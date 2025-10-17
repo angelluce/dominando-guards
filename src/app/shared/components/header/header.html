@@ -1,0 +1,55 @@
+<header class="flex items-center justify-between border-b border-black/10 px-3 lg:px-10 py-3">
+  <div class="flex flex-1 items-center gap-3 cursor-pointer" [routerLink]="['']">
+    <div class="text-primary size-6">
+      <svg fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+        <path d="M44 4H30.6666V17.3334H17.3334V30.6666H4V44H44V4Z" fill="currentColor"></path>
+      </svg>
+    </div>
+    <h1 class="font-bold">Stickermanía</h1>
+  </div>
+  <div class="hidden lg:flex items-center gap-5">
+    @if (authService.isLoggedIn()) {
+      <div class="lg:flex gap-5">
+        @for (item of authService.menuItems(); track item.routerLink) {
+          <a [routerLink]="item.routerLink" class="font-bold">{{ item.label }}</a>
+        }
+      </div>
+      <span class="w-0.5 py-3 bg-primary"></span>
+      <div class="lg:flex items-center gap-5">
+        <span>Bienvenido, {{ authService.currentUser()?.nombres }}</span>
+        <button (click)="onLogout()" class="text-primary">Cerrar sesión</button>
+      </div>
+    } @else {
+      <a routerLink="/acceder" class="text-primary font-bold">Acceder</a>
+    }
+  </div>
+
+  <div class="flex items-center gap-3">
+    <button (click)="toggleSidebar()" aria-label="Mostrar/ocultar menú"
+            class="lg:hidden flex items-center justify-center p-3 rounded-lg text-black">
+      <ng-icon name="heroBars3Solid" class="w-7 h-7"></ng-icon>
+    </button>
+  </div>
+</header>
+
+@if (sidebarOpen()) {
+  <div class="fixed inset-0 z-40 lg:hidden">
+    <div
+      class="fixed top-0 right-0 h-full w-64 bg-white shadow-xl p-6 transform transition-transform duration-300 ease-in-out">
+      <button (click)="toggleSidebar()" class="absolute top-4 right-4 p-3 text-gray-600 hover:text-gray-900">
+        <ng-icon name="heroXMarkSolid" class="w-6 h-6"></ng-icon>
+      </button>
+      <div class="mt-8 flex flex-col gap-5">
+        @if (authService.isLoggedIn()) {
+          @for (item of authService.menuItems(); track item.routerLink) {
+            <a [routerLink]="item.routerLink" class="font-bold">{{ item.label }}</a>
+          }
+          <span class="text-center mt-5">Bienvenido, {{ authService.currentUser()?.nombres }}</span>
+          <button (click)="onLogout()" class="text-primary">Cerrar sesión</button>
+        } @else {
+          <a routerLink="/acceder" class="text-primary font-bold">Acceder</a>
+        }
+      </div>
+    </div>
+  </div>
+}
