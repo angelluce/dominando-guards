@@ -13,8 +13,8 @@ import {ToastService} from '../services/toast';
  */
 export const hasRoleGuard = (allowedRoles: UserRole[]): CanActivateFn => {
   return (route, state): boolean | UrlTree => {
-    const authService = inject(AuthService);
     const router = inject(Router);
+    const authService = inject(AuthService);
     const toast = inject(ToastService);
 
     const userRoles = authService.currentUserRole();

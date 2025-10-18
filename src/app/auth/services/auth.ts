@@ -17,7 +17,6 @@ export class AuthService {
   private _storageService = inject(StorageService);
 
   private readonly _currentUserSignal = signal<UserSimpleResponseInterface | null>(this.getStoredUserData());
-
   public readonly isLoggedIn = computed(() => !!this._currentUserSignal());
   public readonly menuItems: WritableSignal<MenuItemInterface[]> = signal<MenuItemInterface[]>(this.getStoredMenuData());
 
@@ -82,7 +81,7 @@ export class AuthService {
 
   private getStoredUserData(): UserSimpleResponseInterface | null {
     const userData = this._storageService.getItemJSON('user_data');
-    if (userData && typeof userData === 'object' && 'username' in userData) {
+    if (userData) {
       return userData as UserSimpleResponseInterface;
     }
     return null;

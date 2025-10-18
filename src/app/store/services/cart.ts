@@ -19,6 +19,9 @@ export class CartService {
     });
   }
 
+  /**
+   * Recupera el carrito de compras del storage si este existe.
+   */
   private loadCartFromStorage(): void {
     const items: CartItemInterface[] = this.storageService.getItemJSON(this.STORAGE_KEY) ?? [];
     if (items) {
@@ -31,6 +34,9 @@ export class CartService {
     }
   }
 
+  /**
+   * Almacena temporalmente el carrito en el storage.
+   */
   private saveCartToStorage(): void {
     try {
       this.storageService.setItemJSON(this.STORAGE_KEY, this.cartItemsSignal());

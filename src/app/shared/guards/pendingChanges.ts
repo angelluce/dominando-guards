@@ -16,6 +16,11 @@ export const pendingChangesGuard: CanDeactivateFn<ComponentCanDeactivate> = (
   currentState,
   nextState
 ) => {
+
+  if(nextState.url === '/app/perfil-completo') {
+    return true;
+  }
+
   if (component.canDeactivate) {
     return component.canDeactivate();
   }
