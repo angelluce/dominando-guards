@@ -17,6 +17,10 @@ export const pendingChangesGuard: CanDeactivateFn<ComponentCanDeactivate> = (
   nextState
 ) => {
 
+  /**
+   * Aplicamos una 'exclusión' para una ruta a la cual permitimos redirigir
+   * sin importar si hay cambios pendientes del usuario
+   * */
   if(nextState.url === '/app/perfil-completo') {
     return true;
   }

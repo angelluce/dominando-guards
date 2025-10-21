@@ -14,17 +14,31 @@ export const loggingChildGuard: CanActivateChildFn = (route, state) => {
   const router = inject(Router);
   const authService = inject(AuthService);
   const toastService = inject(ToastService);
-  // const user = authService.currentUser();
+  const user = authService.currentUser();
 
-  // if (route.parent?.data['maintenanceMode']) {
-  //   toastService.warning(`Este módulo está en mantenimiento`)
-  //   return router.createUrlTree(['/catalogo']);
-  // }
+  /**
+   * Podemos enviar data desde la RUTA PADRE, en este caso: { maintenanceMode: true }
+   * por ello accedemos al parent del route activo (ActivatedRouteSnapshot)
+   * y obtenemos el dato maintenanceMode para una validación demostrativa
+   * */
+  if (route.parent?.data['maintenanceMode']) {
+    toastService.warning(`Este módulo está en mantenimiento`)
+    return router.createUrlTree(['/catalogo']);
+  }
 
-  // if (route.data['isBetaFeature'] === true && !user?.username.includes('admin')) {
-  //   toastService.warning(`Este usuario no puede acceder a esta beta.`)
-  //   return false;
-  // }
+  /**
+   * Además podemos enviar data desde el ROUTER, en este caso: { isBetaFeature: true }
+   * aquí obtenemos directamente el dato isBetaFeature del route activo (ActivatedRouteSnapshot)
+   * y realizamos una validación demostrativa
+   * */
+  if (route.data['isBetaFeature'] === true && !user?.username.includes('admin')) {
+    toastService.warning(`Este usuario no puede acceder a esta beta.`)
+    return false;
+  }
 
+  /**
+   * Realizamos una validación demostrativa para comprender el funcionamiento del CanActivateChildFn,
+   * en este caso si está loggueado permitimos el acceso, si no redirigimos al login
+   * */
   return authService.isLoggedIn() ? true : router.createUrlTree(['/acceder']);
 };

@@ -2,18 +2,22 @@
   <div class="flex-grow flex items-center justify-center">
     <div class="border border-gray-300 p-8 w-full max-w-sm rounded-lg">
       <h1 class="text-center text-3xl tracking-tight">Iniciar sesión</h1>
-      <h3 class="text-center text-black/60 mb-4">Completa el formulario para continuar</h3>
-      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-        <div class="mb-5">
-          <input class="block w-full rounded border border-gray-400 px-1 py-2"
-                 type="text" formControlName="username" placeholder="Usuario"/>
-        </div>
-        <div class="mb-5">
-          <input class="block w-full rounded border border-gray-400 px-1 py-2"
-                 type="password" formControlName="password" placeholder="Contraseña"/>
-        </div>
-        <button type="submit" class="w-full p-3 rounded-lg shadow-sm text-white font-bold bg-primary">Ingresar</button>
-      </form>
+<!--      <h3 class="text-center text-black/60 mb-4">Completa el formulario para continuar</h3>-->
+<!--      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">-->
+<!--        <div class="mb-5">-->
+<!--          <input class="block w-full rounded border border-gray-400 px-1 py-2"-->
+<!--                 type="text" formControlName="username" placeholder="Usuario"/>-->
+<!--        </div>-->
+<!--        <div class="mb-5">-->
+<!--          <input class="block w-full rounded border border-gray-400 px-1 py-2"-->
+<!--                 type="password" formControlName="password" placeholder="Contraseña"/>-->
+<!--        </div>-->
+<!--        <button type="submit" class="w-full p-3 rounded-lg shadow-sm text-white font-bold bg-primary">Ingresar</button>-->
+<!--      </form>-->
+      <button class="w-full p-3 rounded-lg shadow-sm text-white font-bold bg-primary mt-3"
+              (click)="onSubmit('ADMIN')">Ingresar como ADMIN</button>
+      <button class="w-full p-3 rounded-lg shadow-sm text-white font-bold bg-primary mt-3"
+              (click)="onSubmit('ADMIN')">Ingresar como VENDEDOR</button>
     </div>
   </div>
 </main>

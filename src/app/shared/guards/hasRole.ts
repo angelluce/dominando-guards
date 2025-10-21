@@ -17,9 +17,17 @@ export const hasRoleGuard = (allowedRoles: UserRole[]): CanActivateFn => {
     const authService = inject(AuthService);
     const toast = inject(ToastService);
 
+    /**
+     * Obtenemos el rol del usuario en sesión y
+     * validamos que exista entre los roles permitidos
+     * */
     const userRoles = authService.currentUserRole();
     const userHasAllowedRole = allowedRoles.find(role => role === userRoles);
 
+    /**
+     * Si el rol es correcto se permite el acceso,
+     * caso contrario enviamos a una ruta por defecto
+     * */
     if (userHasAllowedRole) {
       return true;
     } else {

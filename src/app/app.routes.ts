@@ -1,37 +1,39 @@
 import {Routes} from '@angular/router';
-// import {activateGuard, authGuard, noAuthGuard} from '@shared/guards/auth';
-// import {loggingChildGuard} from '@shared/guards/loggingChild';
-// import {pendingChangesGuard} from '@shared/guards/pendingChanges';
-// import {profileDataResolver} from '@shared/resolvers/profileData';
-// import {hasRoleGuard} from '@shared/guards/hasRole';
+import {activateGuard, authGuard, noAuthGuard} from '@shared/guards/auth';
+import {loggingChildGuard} from '@shared/guards/loggingChild';
+import {pendingChangesGuard} from '@shared/guards/pendingChanges';
+import {profileDataResolver} from '@shared/resolvers/profileData';
+import {hasRoleGuard} from '@shared/guards/hasRole';
 
 export const routes: Routes = [
   {
     path: 'app',
-    // canMatch: [authGuard],
-    // canActivateChild: [loggingChildGuard],
+    canMatch: [authGuard],
+    canActivateChild: [loggingChildGuard],
+    // data: {maintenanceMode: true},
     children: [
       {
         path: 'perfil',
-        // resolve: {
-        //   user: profileDataResolver
-        // },
-        // canActivate:[activateGuard],
-        // canDeactivate: [pendingChangesGuard],
+        resolve: {
+          profile: profileDataResolver
+        },
+        canDeactivate: [pendingChangesGuard],
+        canActivate: [hasRoleGuard(['VENDEDOR', "ADMIN", "CLIENTE"])],
         loadComponent: () => import('@shared/pages/profile/profile').then(m => m.Profile)
       },
       {
         path: 'perfil-completo',
+        // data: {isBetaFeature: true},
         loadComponent: () => import('@shared/pages/full-profile/full-profile').then(m => m.FullProfile)
       },
       {
         path: 'administracion',
-        // canActivate:[hasRoleGuard(['ADMIN'])],
+        canActivate: [hasRoleGuard(['ADMIN'])],
         loadComponent: () => import('./admin/pages/management/management').then(m => m.Management)
       },
       {
         path: 'tablero',
-        // canActivate:[hasRoleGuard(['VENDEDOR'])],
+        canActivate: [hasRoleGuard(['VENDEDOR'])],
         loadComponent: () => import('./sales/pages/dashboard/dashboard').then(m => m.Dashboard)
       }
     ]
@@ -42,7 +44,7 @@ export const routes: Routes = [
   },
   {
     path: 'acceder',
-    // canActivate: [noAuthGuard],
+    canActivate: [noAuthGuard],
     loadComponent: () => import('./auth/pages/login/login').then(m => m.Login)
   },
   {path: '', redirectTo: 'catalogo', pathMatch: 'full'},

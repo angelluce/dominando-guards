@@ -25,6 +25,7 @@ export class Profile implements OnInit, ComponentCanDeactivate {
   constructor() {
     // this.profileData = this.route.snapshot.data['profile'];
     this.profileData = this.authService.currentUser();
+    this.profileData = this.route.snapshot.data['profile'];
   }
 
   ngOnInit(): void {

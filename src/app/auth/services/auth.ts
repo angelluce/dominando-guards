@@ -1,10 +1,11 @@
 import {computed, inject, Injectable, signal, WritableSignal} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {Observable, tap} from 'rxjs';
+import {Observable, of, tap} from 'rxjs';
 import {Router} from '@angular/router';
 import {environment} from '@env/environment';
 import {StorageService} from '@shared/services/storage';
 import {LoginRequestDTO, LoginResponseDTO, MenuItemInterface, UserSimpleResponseInterface} from '../interfaces/login';
+import {UserRole} from '@auth/interfaces/user-role';
 
 @Injectable({
   providedIn: 'root'
@@ -36,6 +37,52 @@ export class AuthService {
         this.storeTokens(response);
         this._currentUserSignal.set(response.user);
         this.menuItems.set(response.menu);
+      })
+    );
+  }
+
+  loginWithoutAPI(role: UserRole): Observable<any> {
+    const rolesAdmin = [
+      {
+        label: "Perfil",
+        routerLink: "/app/perfil"
+      },
+      {
+        label: "Administración",
+        routerLink: "/app/administracion"
+      }
+    ];
+    const rolesVendedor = [
+      {
+        label: "Perfil",
+        routerLink: "/app/perfil"
+      },
+      {
+        label: "Vendedor",
+        routerLink: "/app/tablero"
+      }
+    ];
+    const dataResponse = {
+      mfaRequired: false,
+      accessToken: "eyGbffedJ0...",
+      refreshToken: "9dbfff688...",
+      role: role,
+      user: {
+        username: "d",
+        nombres: "l",
+        apellidos: "o"
+      },
+      menu: role === 'ADMIN' ? rolesAdmin : rolesVendedor
+    }
+
+    // Simulación de storeTokens
+    this.storeTokens(dataResponse);
+    // Simulación de actualización de señales/estado
+    this._currentUserSignal.set(dataResponse.user);
+    this.menuItems.set(dataResponse.menu);
+    this.router.navigate(['/app/perfil']).catch();
+    return of().pipe(
+      tap(response => {
       })
     );
   }

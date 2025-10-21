@@ -1,6 +1,7 @@
 import {CanActivateFn, CanMatchFn, GuardResult, MaybeAsync, Router} from '@angular/router';
 import {inject} from '@angular/core';
 import {AuthService} from '@auth/services/auth';
+import {ToastService} from '@shared/services/toast';
 
 /**
  * Guard para prevenir la carga de la rama de rutas protegidas si el usuario no está autenticado.
@@ -13,6 +14,10 @@ export const authGuard: CanMatchFn = (route, segments): MaybeAsync<GuardResult> 
   const router = inject(Router);
   const authService = inject(AuthService);
 
+  /**
+   * Si el usuario está logueado permitimos acceder a rutas,
+   * caso contrario le enviamos al login
+   * */
   return authService.isLoggedIn() ? true : router.createUrlTree(['/acceder']);
 };
 
@@ -25,6 +30,10 @@ export const activateGuard: CanActivateFn = () => {
   const router = inject(Router);
   const authService = inject(AuthService);
 
+  /**
+   * Si el usuario está logueado permitimos acceder a rutas,
+   * caso contrario le enviamos al login
+   * */
   return authService.isLoggedIn() ? true : router.createUrlTree(['/acceder']);
 };
 
@@ -38,9 +47,15 @@ export const activateGuard: CanActivateFn = () => {
 export const noAuthGuard: CanActivateFn = (route, state) => {
   const router = inject(Router);
   const authService = inject(AuthService);
+  const toastService = inject(ToastService);
 
+  /**
+   * Si el usuario ya está loggeado será enviado al perfil,
+   * caso contrario si permitimos ir al login
+   * */
   if (authService.isLoggedIn()) {
-    return router.createUrlTree(['/app']);
+    toastService.warning('El usuario ya está loggeado, será enviado al perfil');
+    return router.createUrlTree(['/app/perfil']);
   }
 
   return true;
